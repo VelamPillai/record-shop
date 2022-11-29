@@ -83,7 +83,11 @@ export const createUser = async (req,res,next)=>{
         
         const user = new UsersCollection(req.body);
         if (req.file) {
-            user.profileImage = `http://localhost:4000/${req.file.filename}`;
+           
+             //for react app is a front end
+        //user.profileImage = `http://localhost:4000/${req.file.filename}`;
+        //when using express server as a server with views has build of front end ---> this statement i used when deploy our production build in the render.com
+        user.profileImage = `${req.file.filename}`
         }
         await user.save()
         res.json({success:true, data:user})
@@ -127,14 +131,17 @@ export const updateUser = async (req,res,next)=>{
 //         next(err)
 // } 
     
-    //request from react front end with separate page fro edit the fields in the front end side
+    //request from react front end with separate page for edit the fields in the front end side
 try {
     let user = await UsersCollection.findById(req.params.id);
     
     console.log('update', req.file) 
     
     if (req.file  ) {
-        user.profileImage = `http://localhost:4000/${req.file.filename}`;
+        //for react app is a front end
+        //user.profileImage = `http://localhost:4000/${req.file.filename}`;
+        //when using express server as a server with views has build of front end
+        user.profileImage = `${req.file.filename}`
        /*  console.log(user.profileImage); */
     }
     if (req.body.password) {
